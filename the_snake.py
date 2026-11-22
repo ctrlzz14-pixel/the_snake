@@ -73,6 +73,42 @@ class Apple(GameObject):
         pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
 
 
+class Snake(GameObject):
+    """Класс змейки, которая движется по сетке игрового поля."""
+
+    def __init__(self):
+        """Создать змейку из одного сегмента в центре поля."""
+        super().__init__()
+        self.body_color = SNAKE_COLOR
+        self.length = 1
+        self.positions = [self.position]
+        self.direction = RIGHT
+        self.next_direction = None
+        self.last = None
+
+    def get_head_position(self):
+        """Вернуть координаты головы змейки."""
+        return self.positions[0]
+
+    def update_direction(self):
+        """Подготовить обновление направления движения."""
+
+    def move(self):
+        """Подготовить перемещение змейки."""
+
+    def draw(self):
+        """Подготовить отрисовку змейки."""
+
+    def reset(self):
+        """Вернуть змейку в начальное состояние."""
+        self.length = 1
+        self.position = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+        self.positions = [self.position]
+        self.direction = RIGHT
+        self.next_direction = None
+        self.last = None
+
+
 def main():
     # Инициализация PyGame:
     pygame.init()
