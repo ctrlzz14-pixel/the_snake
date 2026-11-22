@@ -1,4 +1,4 @@
-from random import choice, randint
+from random import choice
 
 import pygame
 
@@ -54,17 +54,23 @@ class GameObject:
 class Apple(GameObject):
     """Класс яблока, которое можно перемещать по игровому полю."""
 
-    def __init__(self):
-        """Создать яблоко в случайной клетке поля."""
+    def __init__(self, snake=None):
+        """Создать яблоко в случайной свободной клетке поля."""
         super().__init__()
         self.body_color = APPLE_COLOR
-        self.randomize_position()
+        self.randomize_position(snake)
 
-    def randomize_position(self):
-        """Выбрать случайные координаты в пределах сетки поля."""
-        x = randint(0, GRID_WIDTH - 1) * GRID_SIZE
-        y = randint(0, GRID_HEIGHT - 1) * GRID_SIZE
-        self.position = (x, y)
+    def randomize_position(self, snake=None):
+        """Выбрать свободную клетку, не занятую телом змейки."""
+        occupied = set(snake.positions) if snake is not None else set()
+        free_positions = [
+            (x * GRID_SIZE, y * GRID_SIZE)
+            for x in range(GRID_WIDTH)
+            for y in range(GRID_HEIGHT)
+            if (x * GRID_SIZE, y * GRID_SIZE) not in occupied
+        ]
+        if free_positions:
+            self.position = choice(free_positions)
 
     def draw(self):
         """Отрисовать яблоко с границей клетки."""
