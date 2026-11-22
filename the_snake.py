@@ -51,6 +51,28 @@ class GameObject:
         """Определить базовый способ отрисовки без рисующих действий."""
 
 
+class Apple(GameObject):
+    """Класс яблока, которое можно перемещать по игровому полю."""
+
+    def __init__(self):
+        """Создать яблоко в случайной клетке поля."""
+        super().__init__()
+        self.body_color = APPLE_COLOR
+        self.randomize_position()
+
+    def randomize_position(self):
+        """Выбрать случайные координаты в пределах сетки поля."""
+        x = randint(0, GRID_WIDTH - 1) * GRID_SIZE
+        y = randint(0, GRID_HEIGHT - 1) * GRID_SIZE
+        self.position = (x, y)
+
+    def draw(self):
+        """Отрисовать яблоко с границей клетки."""
+        rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
+        pygame.draw.rect(screen, self.body_color, rect)
+        pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
+
+
 def main():
     # Инициализация PyGame:
     pygame.init()
