@@ -100,7 +100,17 @@ class Snake(GameObject):
         """Подготовить обновление направления движения."""
 
     def move(self):
-        """Подготовить перемещение змейки."""
+        """Переместить змейку с проходом через границы поля."""
+        head_x, head_y = self.get_head_position()
+        dx, dy = self.direction
+        new_head = (
+            (head_x + dx * GRID_SIZE) % SCREEN_WIDTH,
+            (head_y + dy * GRID_SIZE) % SCREEN_HEIGHT,
+        )
+        self.positions.insert(0, new_head)
+        self.position = new_head
+        if len(self.positions) > self.length:
+            self.last = self.positions.pop()
 
     def draw(self):
         """Подготовить отрисовку змейки."""
