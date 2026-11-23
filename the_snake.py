@@ -161,16 +161,25 @@ def handle_keys(game_object):
 
 
 def main():
-    # Инициализация PyGame:
+    """Запустить игровой цикл змейки."""
     pygame.init()
-    # Тут нужно создать экземпляры классов.
-    ...
+    snake = Snake()
+    apple = Apple(snake=snake)
 
-    # while True:
-    #     clock.tick(SPEED)
+    while True:
+        clock.tick(SPEED)
+        handle_keys(snake)
+        snake.update_direction()
+        snake.move()
 
-        # Тут опишите основную логику игры.
-        # ...
+        if snake.get_head_position() == apple.position:
+            snake.length += 1
+            apple.randomize_position(snake)
+
+        screen.fill(BOARD_BACKGROUND_COLOR)
+        apple.draw()
+        snake.draw()
+        pygame.display.update()
 
 
 if __name__ == '__main__':
