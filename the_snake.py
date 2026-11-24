@@ -114,6 +114,8 @@ class Snake(GameObject):
         self.position = new_head
         if len(self.positions) > self.length:
             self.last = self.positions.pop()
+        else:
+            self.last = None
 
     def draw(self):
         """Отрисовать змейку и стереть удалённый хвост."""
