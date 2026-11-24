@@ -100,9 +100,16 @@ class Snake(GameObject):
 
     def update_direction(self):
         """Применить направление, выбранное обработчиком клавиш."""
-        if self.next_direction:
-            self.direction = self.next_direction
-            self.next_direction = None
+        if not self.next_direction:
+            return
+        new_direction = self.next_direction
+        is_reverse = (
+            new_direction[0] == -self.direction[0]
+            and new_direction[1] == -self.direction[1]
+        )
+        if not is_reverse:
+            self.direction = new_direction
+        self.next_direction = None
 
     def move(self):
         """Переместить змейку с проходом через границы поля."""
