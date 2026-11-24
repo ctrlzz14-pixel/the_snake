@@ -156,19 +156,27 @@ class Snake(GameObject):
 
 def handle_keys(game_object):
     """Обработать события выхода и управления стрелками."""
+    directions = {
+        pygame.K_UP: UP,
+        pygame.K_DOWN: DOWN,
+        pygame.K_LEFT: LEFT,
+        pygame.K_RIGHT: RIGHT,
+    }
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             raise SystemExit
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP and game_object.direction != DOWN:
-                game_object.next_direction = UP
-            elif event.key == pygame.K_DOWN and game_object.direction != UP:
-                game_object.next_direction = DOWN
-            elif event.key == pygame.K_LEFT and game_object.direction != RIGHT:
-                game_object.next_direction = LEFT
-            elif event.key == pygame.K_RIGHT and game_object.direction != LEFT:
-                game_object.next_direction = RIGHT
+        if event.type != pygame.KEYDOWN:
+            continue
+        new_direction = directions.get(event.key)
+        if new_direction is None:
+            continue
+        is_reverse = (
+            new_direction[0] == -game_object.direction[0]
+            and new_direction[1] == -game_object.direction[1]
+        )
+        if not is_reverse:
+            game_object.next_direction = new_direction
 
 
 def main():
